@@ -1,0 +1,39 @@
+{
+  "name": "drx-abi-trading-template",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Self-custody ABI integration template for Drake contracts on Monad",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": "^24.0.0"
+  },
+  "scripts": {
+    "check": "tsc --noEmit",
+    "market-order": "tsx examples/market-order.ts",
+    "prepare-portfolio": "tsx examples/prepare-portfolio.ts",
+    "order-lifecycle": "tsx examples/order-lifecycle.ts",
+    "portfolio-state": "tsx examples/portfolio-state.ts",
+    "oracle-dry-run": "tsx examples/oracle-dry-run.ts",
+    "portfolio-manage": "tsx examples/portfolio-manage.ts",
+    "test": "tsx --test test/unit.test.ts",
+    "test:fork": "tsx --test test/fork.test.ts",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@pythnetwork/hermes-client": "^3.1.0",
+    "dotenv": "^17.3.1",
+    "viem": "^2.21.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.10.2",
+    "eslint": "^10.10.0",
+    "prettier": "^3.9.6",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.70.0"
+  }
+}

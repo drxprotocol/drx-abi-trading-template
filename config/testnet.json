@@ -1,0 +1,29 @@
+{
+  "chainId": 10143,
+  "networkName": "monad-testnet",
+  "blockTimeMs": 400,
+  "contracts": {
+    "trading": "0x679Dd2Ddc8fc17b0F2B465843Da6e02857771a07",
+    "portfolioFactory": "0xC1E75714fBE404F86C13A84ea96ecfdDec64133E",
+    "oracleRouter": "0x9b35856CD35D57b154A8f644070BF18FFC8BfB75",
+    "settlementToken": "0x322a0245324dc81EE8125E150e46828A4d2bEF5F"
+  },
+  "instruments": {
+    "1": {
+      "symbol": "BTC/USD",
+      "pythFeedId": "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
+    },
+    "2": {
+      "symbol": "ETH/USD",
+      "pythFeedId": "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
+    },
+    "3": {
+      "symbol": "SOL/USD",
+      "pythFeedId": "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d"
+    },
+    "4": {
+      "symbol": "MON/USD",
+      "pythFeedId": "0x31491744e2dbf6df7fcf4ac0820d18a609b49076d45066d3568424e62f686cd1"
+    }
+  }
+}

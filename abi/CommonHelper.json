@@ -1,0 +1,21 @@
+[
+  {
+    "type": "function",
+    "name": "getOrderBookByInstId",
+    "inputs": [
+      {
+        "name": "instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "contract IOrderBook"
+      }
+    ],
+    "stateMutability": "view"
+  }
+]

@@ -1,0 +1,980 @@
+[
+  {
+    "type": "function",
+    "name": "changeLeverage",
+    "inputs": [
+      {
+        "name": "_instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "_leverage",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "getAvailableAssetBalance",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getLeverage",
+    "inputs": [
+      {
+        "name": "_instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getPendingOrderCountByInstId",
+    "inputs": [
+      {
+        "name": "instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getPosGrossMargin",
+    "inputs": [
+      {
+        "name": "_instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "isInstPosOpen",
+    "inputs": [
+      {
+        "name": "_instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "numPendingOrders",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "owner",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "withdraw",
+    "inputs": [
+      {
+        "name": "_asset",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "_amount",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "event",
+    "name": "AssetFrozen",
+    "inputs": [
+      {
+        "name": "portfolio",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "amount",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "AssetMovedToPortfolio",
+    "inputs": [
+      {
+        "name": "toPortfolio",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "asset",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "amount",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "AssetUnfrozen",
+    "inputs": [
+      {
+        "name": "portfolio",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "amount",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "Initialized",
+    "inputs": [
+      {
+        "name": "version",
+        "type": "uint64",
+        "indexed": false,
+        "internalType": "uint64"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "PositionClosed",
+    "inputs": [
+      {
+        "name": "instId",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "name": "endState",
+        "type": "uint8",
+        "indexed": false,
+        "internalType": "enum TypeLibrary.PosState"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "PositionStateChanged",
+    "inputs": [
+      {
+        "name": "portfolio",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "instId",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "name": "isMaker",
+        "type": "bool",
+        "indexed": false,
+        "internalType": "bool"
+      },
+      {
+        "name": "updatedSide",
+        "type": "uint8",
+        "indexed": false,
+        "internalType": "enum TypeLibrary.Side"
+      },
+      {
+        "name": "updatedSize",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "updatedAvgPrice",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "updatedState",
+        "type": "uint8",
+        "indexed": false,
+        "internalType": "enum TypeLibrary.PosState"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "Upgraded",
+    "inputs": [
+      {
+        "name": "implementation",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "error",
+    "name": "AddressEmptyCode",
+    "inputs": [
+      {
+        "name": "target",
+        "type": "address",
+        "internalType": "address"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "CannotRecoverFrozenDust",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "ERC1967InvalidImplementation",
+    "inputs": [
+      {
+        "name": "implementation",
+        "type": "address",
+        "internalType": "address"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "ERC1967NonPayable",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "ExceedsReducibleSize",
+    "inputs": [
+      {
+        "name": "portfolio",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "orderSize",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "availableSize",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "FailedCall",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InsufficientAvailableMargin",
+    "inputs": [
+      {
+        "name": "available",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "required",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "InvalidAmount",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidInitialization",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidLeverage",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidMarginAdd",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidMarginReduce",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidOrderBookCaller",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidOrderSize",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidPrice",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidReduceOnlySide",
+    "inputs": [
+      {
+        "name": "portfolio",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "InvalidTargetPortfolioType",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "MarginRatioTooLow",
+    "inputs": [
+      {
+        "name": "currentRatio",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "requiredRatio",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "NoAvailablePositionToReduce",
+    "inputs": [
+      {
+        "name": "portfolio",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "pendingReduces",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "NoPendingBadDebt",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "NoPositionToReduce",
+    "inputs": [
+      {
+        "name": "portfolio",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "NotImplemented",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "NotInEmergency",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "NotInitializing",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "PortfolioHasOpenPositions",
+    "inputs": [
+      {
+        "name": "portfolio",
+        "type": "address",
+        "internalType": "address"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "PortfolioHasPendingOrders",
+    "inputs": [
+      {
+        "name": "portfolio",
+        "type": "address",
+        "internalType": "address"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "PortfolioNotLiquidatable",
+    "inputs": [
+      {
+        "name": "portfolio",
+        "type": "address",
+        "internalType": "address"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "PortfolioUnderLiquidation",
+    "inputs": [
+      {
+        "name": "portfolio",
+        "type": "address",
+        "internalType": "address"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "PositionAlreadyExists",
+    "inputs": [
+      {
+        "name": "instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "PositionNotLiquidatable",
+    "inputs": [
+      {
+        "name": "portfolio",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "PositionNotOpen",
+    "inputs": [
+      {
+        "name": "instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "PostADLResidualLiquidatable",
+    "inputs": [
+      {
+        "name": "instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "ProtocolLimitExceeded",
+    "inputs": [
+      {
+        "name": "code",
+        "type": "uint8",
+        "internalType": "enum ProtocolLimitExceededCodes"
+      },
+      {
+        "name": "portfolio",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "actual",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "expected",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "ReduceOnlyExceedsPosition",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "SafeCastOverflowedIntDowncast",
+    "inputs": [
+      {
+        "name": "bits",
+        "type": "uint8",
+        "internalType": "uint8"
+      },
+      {
+        "name": "value",
+        "type": "int256",
+        "internalType": "int256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "SafeCastOverflowedIntToUint",
+    "inputs": [
+      {
+        "name": "value",
+        "type": "int256",
+        "internalType": "int256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "SafeCastOverflowedUintDowncast",
+    "inputs": [
+      {
+        "name": "bits",
+        "type": "uint8",
+        "internalType": "uint8"
+      },
+      {
+        "name": "value",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "SafeCastOverflowedUintToInt",
+    "inputs": [
+      {
+        "name": "value",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "SafeERC20FailedOperation",
+    "inputs": [
+      {
+        "name": "token",
+        "type": "address",
+        "internalType": "address"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "TargetPortfolioNotDeployed",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "TotalReduceExceedsPosition",
+    "inputs": [
+      {
+        "name": "portfolio",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "totalPending",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "positionSize",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "UUPSUnauthorizedCallContext",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "UUPSUnsupportedProxiableUUID",
+    "inputs": [
+      {
+        "name": "slot",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "UnauthorizedCaller",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "name": "h",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "contract ICommonHelper"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getPosByInstId",
+    "inputs": [
+      {
+        "name": "_instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "internalType": "struct TypeLibrary.Position",
+        "components": [
+          {
+            "name": "posState",
+            "type": "uint8",
+            "internalType": "enum TypeLibrary.PosState"
+          },
+          {
+            "name": "posSide",
+            "type": "uint8",
+            "internalType": "enum TypeLibrary.Side"
+          },
+          {
+            "name": "posSize",
+            "type": "uint64",
+            "internalType": "uint64"
+          },
+          {
+            "name": "avgPx",
+            "type": "uint64",
+            "internalType": "uint64"
+          }
+        ]
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getPosCore",
+    "inputs": [
+      {
+        "name": "_instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "state",
+        "type": "uint8",
+        "internalType": "enum TypeLibrary.PosState"
+      },
+      {
+        "name": "side",
+        "type": "uint8",
+        "internalType": "enum TypeLibrary.Side"
+      },
+      {
+        "name": "size",
+        "type": "uint64",
+        "internalType": "uint64"
+      },
+      {
+        "name": "avgPx",
+        "type": "uint64",
+        "internalType": "uint64"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getMyPosInstIds",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256[]",
+        "internalType": "uint256[]"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getFrozenAssetAmount",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getPositionUnrealizedPnL",
+    "inputs": [
+      {
+        "name": "_instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "_instPrice",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "_pos",
+        "type": "tuple",
+        "internalType": "struct TypeLibrary.Position",
+        "components": [
+          {
+            "name": "posState",
+            "type": "uint8",
+            "internalType": "enum TypeLibrary.PosState"
+          },
+          {
+            "name": "posSide",
+            "type": "uint8",
+            "internalType": "enum TypeLibrary.Side"
+          },
+          {
+            "name": "posSize",
+            "type": "uint64",
+            "internalType": "uint64"
+          },
+          {
+            "name": "avgPx",
+            "type": "uint64",
+            "internalType": "uint64"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "int256",
+        "internalType": "int256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getPosNetMargin",
+    "inputs": [
+      {
+        "name": "_instId",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "_instPrice",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "_pos",
+        "type": "tuple",
+        "internalType": "struct TypeLibrary.Position",
+        "components": [
+          {
+            "name": "posState",
+            "type": "uint8",
+            "internalType": "enum TypeLibrary.PosState"
+          },
+          {
+            "name": "posSide",
+            "type": "uint8",
+            "internalType": "enum TypeLibrary.Side"
+          },
+          {
+            "name": "posSize",
+            "type": "uint64",
+            "internalType": "uint64"
+          },
+          {
+            "name": "avgPx",
+            "type": "uint64",
+            "internalType": "uint64"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "int256",
+        "internalType": "int256"
+      }
+    ],
+    "stateMutability": "view"
+  }
+]

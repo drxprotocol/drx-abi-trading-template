@@ -1,0 +1,140 @@
+[
+  {
+    "type": "function",
+    "name": "getPortfolioPendingOrdersData",
+    "inputs": [
+      {
+        "name": "portfolio",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "orders",
+        "type": "tuple[]",
+        "internalType": "struct TypeLibrary.Order[]",
+        "components": [
+          {
+            "name": "header",
+            "type": "tuple",
+            "internalType": "struct TypeLibrary.OrderHeader",
+            "components": [
+              {
+                "name": "kind",
+                "type": "uint8",
+                "internalType": "enum TypeLibrary.OrderKind"
+              },
+              {
+                "name": "state",
+                "type": "uint8",
+                "internalType": "enum TypeLibrary.OrderState"
+              },
+              {
+                "name": "side",
+                "type": "uint8",
+                "internalType": "enum TypeLibrary.Side"
+              },
+              {
+                "name": "portfolio",
+                "type": "address",
+                "internalType": "address"
+              },
+              {
+                "name": "instId",
+                "type": "uint16",
+                "internalType": "uint16"
+              },
+              {
+                "name": "size",
+                "type": "uint64",
+                "internalType": "uint64"
+              },
+              {
+                "name": "reduceOnly",
+                "type": "bool",
+                "internalType": "bool"
+              }
+            ]
+          },
+          {
+            "name": "market",
+            "type": "tuple",
+            "internalType": "struct TypeLibrary.MarketOrderVariant",
+            "components": [
+              {
+                "name": "slippageLimit",
+                "type": "uint64",
+                "internalType": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "limit",
+            "type": "tuple",
+            "internalType": "struct TypeLibrary.LimitOrderVariant",
+            "components": [
+              {
+                "name": "limitPrice",
+                "type": "uint64",
+                "internalType": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "trigger",
+            "type": "tuple",
+            "internalType": "struct TypeLibrary.TriggerOrderVariant",
+            "components": [
+              {
+                "name": "mode",
+                "type": "uint8",
+                "internalType": "enum TypeLibrary.TriggerKind"
+              },
+              {
+                "name": "stopLoss",
+                "type": "tuple",
+                "internalType": "struct TypeLibrary.TriggerLegInternal",
+                "components": [
+                  {
+                    "name": "triggerPrice",
+                    "type": "uint64",
+                    "internalType": "uint64"
+                  },
+                  {
+                    "name": "executionLimit",
+                    "type": "uint64",
+                    "internalType": "uint64"
+                  }
+                ]
+              },
+              {
+                "name": "takeProfit",
+                "type": "tuple",
+                "internalType": "struct TypeLibrary.TriggerLegInternal",
+                "components": [
+                  {
+                    "name": "triggerPrice",
+                    "type": "uint64",
+                    "internalType": "uint64"
+                  },
+                  {
+                    "name": "executionLimit",
+                    "type": "uint64",
+                    "internalType": "uint64"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "orderIds",
+        "type": "uint256[]",
+        "internalType": "uint256[]"
+      }
+    ],
+    "stateMutability": "view"
+  }
+]
