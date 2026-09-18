@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Added HYPE/USD as instrument `5` for Monad mainnet and testnet.
+
 ## Initial public release
 
 - Curated ABI function surfaces for community integrations.
